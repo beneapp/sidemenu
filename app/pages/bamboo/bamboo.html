@@ -1,0 +1,43 @@
+<!--
+  Generated template for the BambooPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-navbar dark *navbar >
+  <ion-title>bamboo</ion-title>
+   <ion-buttons end>
+        <button (click)="Reply()"><ion-icon name="add">Reply</ion-icon></button>
+    </ion-buttons>
+</ion-navbar>
+
+<ion-content padding class="bamboo">
+  <ion-card>
+    <ion-card-header>
+      {{title}}
+    </ion-card-header>
+    <ion-card-content>
+      <p><ion-icon name="add"></ion-icon>123</p>      
+    </ion-card-content>
+  </ion-card>
+
+
+    <ion-item>
+      <ion-label stacked>Message</ion-label>
+      <ion-textarea class="expanding" [(ngModel)]="text" (keypress)="eventHandler($event)"></ion-textarea>
+      <!--<ion-textarea id="textarea" [(ngModel)]="text" ></ion-textarea>-->
+    </ion-item>
+    
+    
+
+  <!--<ion-list>
+    <ion-list-header>이야기들</ion-list-header>
+    <ion-item *ngFor="#bamboo of bamboos">
+      <h2>{{bamboo.text}}</h2>
+      <p>
+        <ion-icon name="heart"></ion-icon>45</p>
+    </ion-item>
+  </ion-list>-->
+
+
+</ion-content>

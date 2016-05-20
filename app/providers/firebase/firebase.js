@@ -10,31 +10,22 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class Firebase {
-  static get parameters() {
+  static get parameters(){
     return [[Http]]
-  }
+  }  
 
   constructor(http) {
     this.http = http;
     this.data = null;
-    this.ref = new Firebase("https://sweltering-heat-9516.firebaseio.com/2016/bamboo/");
+    this.fb = new Firebase("https://sweltering-heat-9516.firebaseio.com/2016/bamboo/");    
   }
-  load2() {
-    return 'a';
-    // return new Promise(resolve => {
-    //   this.ref.once('value',
-    //     (snapshot) => {
-    //       console.log(snapshot.val());    
-    //       debugger;      
-    //       var items = snapshot.val();          
-    //       for (var key in items) {
-    //         this.root.items.push(items[key]);
-    //       }
-    //       resolve(this.root.items);          
-    //     }, error => console.log(error.code)
-    //     , () => console.log('read complete')
-    //   )
-    // });
+  
+  
+  call(){
+    console.log("log" + this.fb);
+  }
+  getData(path, type){
+    
   }
 
   load() {

@@ -9,33 +9,36 @@ import {BambooWritePage} from '../bamboo-write/bamboo-write'
 */
 @Page({
   templateUrl: 'build/pages/bamboo/bamboo.html'
+  , providers: [Firebase]
 })
 export class BambooPage {
 
   static get parameters() {
-    return [[NavController]];
+    return [[NavController]]; 
   }
 
   constructor(nav) {
     this.nav = nav;
+    this.firebase = new Firebase("https://sweltering-heat-9516.firebaseio.com/2016/bamboo/");
     this.title = "Say Anything";
-    this.level = "root";
-        
-    this.myDataRef = new Firebase("https://sweltering-heat-9516.firebaseio.com/2016/bamboo/");
-    //this.bookItems = af.list('');
-    //this.myDataRef = ref;
+    this.parent = "root";
+    
+    this.firebase.call();
+    //this.myDataRef = new Firebase("https://sweltering-heat-9516.firebaseio.com/2016/bamboo/");
+    // //this.bookItems = af.list('');
+    // //this.myDataRef = ref;
 
-    //데이터를 가져온다.
-    this.myDataRef.once('value',
-      (snapshot) => {
-        console.log(snapshot.val());
-        var items = snapshot.val();
-        for (var key in items) {
-          this.bamboos.push(items[key]);
-        }
-      }, error => console.log(error.code)
-      , () => console.log('read complete')
-    )
+    // //데이터를 가져온다.
+    // this.myDataRef.once('value',
+    //   (snapshot) => {
+    //     console.log(snapshot.val());
+    //     var items = snapshot.val();
+    //     for (var key in items) {
+    //       this.bamboos.push(items[key]);
+    //     }
+    //   }, error => console.log(error.code)
+    //   , () => console.log('read complete')
+    // )
         
   }
 

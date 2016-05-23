@@ -5,6 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-navbar dark *navbar >
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
   <ion-title>bamboo</ion-title>
    <ion-buttons end>
         <button (click)="add()"><ion-icon name="add">add</ion-icon></button>
@@ -14,10 +17,12 @@
 <ion-content padding class="bamboo">
   <ion-card>
     <ion-card-header>
-      {{title}}
+      {{text}}
     </ion-card-header>
-    <ion-card-content>
-      <p><ion-icon name="add"></ion-icon>123</p>      
+    <ion-card-content>      
+      <ion-buttons end>       
+        <p><ion-icon name="heart"></ion-icon> {{subcount}}</p>
+      </ion-buttons>
     </ion-card-content>
   </ion-card>
 
@@ -31,11 +36,18 @@
 
   <ion-list>
     <ion-list-header>Story</ion-list-header>
-    <ion-item *ngFor="#bamboo of bamboos">
-      <h2>{{bamboo.text}}</h2>
-      <p>
-        <ion-icon name="heart"></ion-icon>45</p>
-    </ion-item>
+    <ion-item-sliding *ngFor="#bamboo of bamboos">
+       <button ion-item  (click)="viewBamboo(bamboo)">
+          {{bamboo.text}}
+          <!--<p>{{item.description}}</p>-->
+            <p style="float:right">
+              <ion-icon name="heart"></ion-icon> {{bamboo.subcount}}</p>
+        </button>
+              
+      <!--<h2>{{bamboo.text}}</h2>-->
+      <!--<p>
+        <ion-icon name="heart"></ion-icon>45</p>-->
+    </ion-item-sliding>
   </ion-list>
 
 

@@ -10,22 +10,78 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class Firebase {
-  static get parameters(){
+  static get parameters() {
     return [[Http]]
-  }  
+  }
 
   constructor(http) {
     this.http = http;
     this.data = null;
-    this.fb = new Firebase("https://sweltering-heat-9516.firebaseio.com/2016/bamboo/");    
+
+    // this._ngZone.runOutsideAngular(() => {
+    //   this._increaseProgress(() => {
+    //     // reenter the Angular zone and display done
+    //     this._ngZone.run(() => { console.log('Outside Done!') });
+    //   }}));
+
+
+
+    // var token = {
+    //   "provider": "anonymous",
+    //   "uid": "3c4e577c-d713-4561-b903-07c012f78a80"
+    // };    
+    //  debugger;
+    if (firebase.apps.length > 0) {
+      this.fb = firebase;
+    } else {
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAFb6L3F0YMW0XJl6NdZGP7wtoWfa5naPY",
+        authDomain: "myfirstapp-bcfdc.firebaseapp.com",
+        databaseURL: "https://myfirstapp-bcfdc.firebaseio.com",
+        storageBucket: "myfirstapp-bcfdc.appspot.com",
+      };
+      this.fb = firebase.initializeApp(config);
+    }
+    this.database = this.fb.database();
+
+
+
+    // this.database.ref(this.path).on('child_added', (snapshot) => {
+    //   this.addBamboo(snapshot);
+    // });
+
+
+    // this.fb.auth(token).signInAnonymously().then((error) => {
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    //   console.log("#E# " + errorCode + ":" + errorMessage);
+    //   this.database = this.fb.database();
+    //   this.database.ref('test/' + 'sth1').set({
+    //     username: 'name12',
+    //     email: 'email12'
+    //   });
+    // });
+
   }
-  
-  
-  call(){
+
+  getDatabase() {
+    return this.database;
+  }
+
+  write(text) {
+    this.database.ref('test/' + 'sth2').set({
+      username: 'name12',
+      email: 'email12',
+      text: text
+    });
+  }
+
+  call() {
     console.log("log" + this.fb);
   }
-  getData(path, type){
-    
+  getData(path, type) {
+
   }
 
   load() {

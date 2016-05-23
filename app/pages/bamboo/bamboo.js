@@ -1,5 +1,8 @@
 import {Page, NavController} from 'ionic-angular';
-import {BambooWritePage} from '../bamboo-write/bamboo-write'
+import {BambooWritePage} from '../bamboo-write/bamboo-write';
+import {BambooSubPage} from '../bamboo-sub/bamboo-sub';
+import {Firebase} from '../../providers/firebase/firebase';
+//import {SortK} from '../../pipes/sort';
 
 //import {FirebaseRef} from 'angularfire2';
 /*
@@ -10,50 +13,30 @@ import {BambooWritePage} from '../bamboo-write/bamboo-write'
 */
 @Page({
   templateUrl: 'build/pages/bamboo/bamboo.html'
+  , providers: [Firebase]
+  // , pipes: [SortK]
 })
 export class BambooPage {
 
-
   static get parameters() {
-    return [[NavController]];
+    return [[NavController], [Firebase]];
   }
 
-  constructor(nav) {
+  constructor(nav, fb) {
     this.nav = nav;
 
     //this.firebase = new Firebase("https://sweltering-heat-9516.firebaseio.com/2016/bamboo/root");
-    this.title = "Say Anything";
-    this.parent = "root";
-
-
-
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyAFb6L3F0YMW0XJl6NdZGP7wtoWfa5naPY",
-      authDomain: "myfirstapp-bcfdc.firebaseapp.com",
-      databaseURL: "https://myfirstapp-bcfdc.firebaseio.com",
-      storageBucket: "myfirstapp-bcfdc.appspot.com",
-    };
-    var token = {
-      "provider": "anonymous",
-      "uid": "3c4e577c-d713-4561-b903-07c012f78a80"
-    };
-
-    this.fb = firebase.initializeApp(config);
-    debugger;
-    this.fb.auth(token).signInAnonymously().then((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log("#E# " + errorCode + ":" + errorMessage);
-      this.database = this.fb.database();
-      this.database.ref('test/' + 'sth1').set({
-        username: 'name42222',
-        email: 'email43222'
-      });
+    this.text = "Say Anything";
+    this.parent = {};
+    this.parent.uid = 'root';
+    this.bamboos = [];
+    
+    
+    this.database = fb.getDatabase();
+    this.path = 'test/sub';
+    this.database.ref(this.path).on('child_added', (snapshot) => {
+      this.addBamboo(snapshot);
     });
-
-
-
     //this.fb = firebase.intializeApp(config);
     // console.log(config);
     // this.fb = firebase.intializeApp(config);
@@ -74,6 +57,39 @@ export class BambooPage {
     //   , () => console.log('read complete')
     // )
 
+    //debugger;
+    //this.text = this.app.getFirebase();
+
+
+
+    // this.database.ref(this.path).once('value',
+    //   (snapshot) => {
+    //     debugger;
+    //     this.addBambooList(snapshot);
+    //   }, error => console.log(error.code)
+    //   , () => { debugger; console.log('read complete') }
+    // )
+  }
+
+  addBambooList(snapshot) {
+    console.log(snapshot.val());
+    debugger;
+    var items = snapshot.val();
+    for (var key in items) {
+      this.bamboos.push(items[key]);
+    }
+  }
+
+  addBamboo(snapshot) {
+    var item = snapshot.val();
+    console.log("item" + item);
+    this.bamboos.unshift(item);
+    //this.bamboos.push(item);
+    this.subcount = this.bamboos.length;
+  }
+
+  viewBamboo(parent) {
+    this.nav.push(BambooSubPage, { parent: parent, db: this.database, path: this.path });
   }
 
   eventHandler(event) {
@@ -86,6 +102,10 @@ export class BambooPage {
   }
 
   add() {
-    this.nav.push(BambooWritePage, { title: this.title, level: this.level });
+    let parent = {
+      uid: this.parent.uid,
+      text: this.text
+    }
+    this.nav.push(BambooWritePage, { parent: parent, db: this.database, path: this.path });
   }
 }

@@ -58,8 +58,6 @@ export class ShopOverseasPage {
           );
 
           AdMob.showInterstitial();
-
-          //alert('admob created');
         }
       }
     });

@@ -32,6 +32,37 @@ export class ShopOverseasPage {
       this.loadClien(i);
     }
 
+    this.addAdMob();
+  }
+
+  addAdMob() {
+    this.platform.ready().then(() => {
+      if (/(android)/i.test(navigator.userAgent)) {
+        // var admobid = { // for Android
+        //     banner: 'ca-app-pub-3129126307582044/9943917413'
+        // };
+        if (AdMob) {
+          AdMob.createBanner(
+            {
+              adId: 'ca-app-pub-3129126307582044/9943917413',
+              position: AdMob.AD_POSITION.BOTTOM_CENTER,
+              autoShow: true
+            }
+          );
+
+          AdMob.prepareInterstitial(
+            {
+              adId: 'ca-app-pub-3129126307582044/3908900216',
+              autoShow: true
+            }
+          );
+
+          AdMob.showInterstitial();
+
+          //alert('admob created');
+        }
+      }
+    });
   }
 
   openLink(item) {
@@ -57,7 +88,7 @@ export class ShopOverseasPage {
       for (let i in elements) {
         var item = {};
         //debugger;
-        console.log(i);
+        //console.log(i);
         if (i == 'length') break;
         item.category = elements[i].querySelector('span.lst_category');  // 카테고리
         if (!item.category) continue;
@@ -70,7 +101,7 @@ export class ShopOverseasPage {
         item.title = elements[i].querySelector('span.lst_tit').textContent.trim();
         item.reply = elements[i].querySelector('span.lst_reply').textContent.trim();
         this.items.push(item);
-        
+
         this.http.get(item.url).subscribe(data => {
           this.readCnt++;
           let parser = new DOMParser();
@@ -93,7 +124,6 @@ export class ShopOverseasPage {
           console.log(item.imgSrc);
           item.date = doc.querySelector('span.view_info').textContent.trim();
           var pattern = /((\d{2})-(\d{2}) (\d{2}):(\d{2})) .+?(\d+)/;
-          debugger;
           var match = pattern.exec(item.date);
           if (match) {
             item.date = match[1];
@@ -103,7 +133,6 @@ export class ShopOverseasPage {
             var yyyy = now.getFullYear();
             var str = yyyy + '-' + match[2] + '-' + match[3] + 'T' + match[4] + ':' + match[5];
             item.dateSort = new Date(str);
-            debugger;
           }
           //debugger;
           if (item.url) this.items.push(item);
@@ -262,4 +291,8 @@ export class ShopOverseasPage {
     // });
   }
 
+  updateSelectedValue(event) {
+    /// 처리.. 
+    this.lists = "aaa";
+  }
 }

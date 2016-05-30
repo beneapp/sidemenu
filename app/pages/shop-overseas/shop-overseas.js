@@ -31,37 +31,20 @@ export class ShopOverseasPage {
       this.loadDdanzi(i);
       this.loadClien(i);
     }
-
-    this.addAdMob();
   }
 
-  addAdMob() {
-    this.platform.ready().then(() => {
-      if (/(android)/i.test(navigator.userAgent)) {
-        // var admobid = { // for Android
-        //     banner: 'ca-app-pub-3129126307582044/9943917413'
-        // };
-        if (AdMob) {
-          AdMob.createBanner(
-            {
-              adId: 'ca-app-pub-3129126307582044/9943917413',
-              position: AdMob.AD_POSITION.BOTTOM_CENTER,
-              autoShow: true
-            }
-          );
-
-          AdMob.prepareInterstitial(
-            {
-              adId: 'ca-app-pub-3129126307582044/3908900216',
-              autoShow: true
-            }
-          );
-
-          AdMob.showInterstitial();
-        }
-      }
-    });
+  doStarting(){
+    console.log("doStarting");
   }
+  doRefresh(event, refresher){
+    console.log("doRefresh"+event+refresher);
+    debugger;
+    event.complete();
+  }
+  doPulling(event, amt){
+    console.log("doPulling"+event+amt);
+  }
+  
 
   openLink(item) {
     //debugger;

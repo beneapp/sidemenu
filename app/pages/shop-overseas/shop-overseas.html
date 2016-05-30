@@ -27,8 +27,14 @@
             </p>
     </button>
   </ion-card>-->
-  
+
   <ion-list>
+    <ion-refresher (start)="doStarting()" (refresh)="doRefresh($event, refresher)" (pulling)="doPulling($event, amt)">
+      <ion-refresher-content pullingIcon="arrow-down" pullingText="PULL_TO_REFRESH" refreshingSpinner="circles"
+        refreshingText="REFRESHING">
+      </ion-refresher-content>
+    </ion-refresher>
+
     <ion-item-sliding *ngFor="#item of items">
       <button full ion-item (click)="openLink(item)">
       <!--<ion-letter-avatar style="margin:0;" item-left>
@@ -49,6 +55,6 @@
     <!--<ion-infinite-scroll (infinite)="doInfinite($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>-->
-  </ion-list>  
+  </ion-list>
 
 </ion-content>

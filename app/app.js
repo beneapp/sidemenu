@@ -32,7 +32,27 @@ class MyApp {
 
     //this.rootPage = ShopOverseasPage;
     this.rootPage = ShopOverseasPage;
-   
+
+    this.addAdMob();
+  }
+
+  addAdMob() {
+    this.platform.ready().then(() => {
+      if (/(android)/i.test(navigator.userAgent)) {
+        // var admobid = { // for Android
+        //     banner: 'ca-app-pub-3129126307582044/9943917413'
+        // };
+        if (AdMob) {
+          AdMob.createBanner(
+            {
+              adId: 'ca-app-pub-3129126307582044/9943917413',
+              position: AdMob.AD_POSITION.BOTTOM_CENTER,
+              autoShow: true
+            }
+          );
+        }
+      }
+    });
   }
 
   initializeApp() {
@@ -42,8 +62,8 @@ class MyApp {
       StatusBar.styleDefault();
     });
   }
-  
-  getFirebase(){
+
+  getFirebase() {
     return 'fb';
   }
 
